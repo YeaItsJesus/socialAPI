@@ -55,3 +55,19 @@ module.exports = {
       res.status(400).json(err);
     }
   },
+  async addFriend(req, res) {
+    try {
+      const dbUserData = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $push: { friends: req.params.friendId } },
+        { new: true }
+      );
+      if (!dbUserData) {
+        res.status(404).json({ message: 'User could not be found' });
+        return;
+      }
+      res.json(dbUserData);
+    } catch (err) {
+      res.json(err);
+    }
+  },
