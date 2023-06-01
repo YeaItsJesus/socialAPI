@@ -47,3 +47,11 @@ module.exports = {
       res.status(400).json(err);
     }
   },
+  async deleteUser(req, res) {
+    try {
+      const dbUserData = await User.findOneAndDelete({ _id: req.params.id });
+      res.json(dbUserData);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  },
