@@ -71,3 +71,16 @@ module.exports = {
       res.json(err);
     }
   },
+  async removeFriend(req, res) {
+    try {
+      const dbUserData = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { friends: req.params.friendId } },
+        { new: true }
+      );
+      res.json(dbUserData);
+    } catch (err) {
+      res.json(err);
+    }
+  }
+};
