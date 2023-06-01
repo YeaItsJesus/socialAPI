@@ -31,3 +31,19 @@ module.exports = {
       res.status(400).json(err);
     }
   },
+  async updateUser(req, res) {
+    try {
+      const dbUserData = await User.findOneAndUpdate(
+        { _id: req.params.id }, 
+        req.body, 
+        { new: true, runValidators: true }
+      );
+      if (!dbUserData) {
+        res.status(404).json({ message: 'User Could Not be Found' });
+        return;
+      }
+      res.json(dbUserData);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  },
